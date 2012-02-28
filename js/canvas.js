@@ -53,6 +53,9 @@ $(document).ready(function() {
     });
 
     $('#clear_canvas').click(function(){
+        clickX = Array();
+        clickY = Array();
+        clickDrag = Array();
         clearCanvas();
     });
 
@@ -106,5 +109,5 @@ function clearCanvas()
 {
     context.fillStyle = '#ffffff'; // Work around for Chrome
     context.fillRect(0, 0, canvasWidth, canvasHeight); // Fill in the canvas with white
-    canvas.width = canvas.width; // clears the canvas 
+    canvas.width = canvas.width; // clears the canvas
 }
