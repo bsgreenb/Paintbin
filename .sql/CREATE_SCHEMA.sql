@@ -36,7 +36,7 @@ ROW_FORMAT = DEFAULT;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `imagebin`.`AccessLog` (
   `AccessLog_ID` INT(32) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `ipAddress` VARCHAR(45) NULL ,
+  `ipAddress` INT UNSIGNED NULL COMMENT 'INET_ATON' ,
   `Painting_ID` INT(32) UNSIGNED NULL DEFAULT NULL ,
   `Page` VARCHAR(250) NULL ,
   `_GET` BLOB NULL ,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `imagebin`.`SimplePaintingView` (`id` INT);
 
 DELIMITER $$
 USE `imagebin`$$
-CREATE PROCEDURE `imagebin`.`InsertNewImage` (IN sha256Hash)
+CREATE PROCEDURE `imagebin`.`proc_InsertNewImage` (IN sha256FileHash)
 BEGIN
 
 
@@ -87,10 +87,11 @@ SELECT
     SELECT sequenceKey 
     FROM PaintingInner 
     WHERE PaintingInner.Painting_ID = Painting.isARemixOfPainting_ID
-    ) as remixSequenceKey,
+    ), NULL) as remixSequenceKey,
   lastUpated as `dateAdded`
 
-FROM Painting;
+FROM Painting
+  ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
