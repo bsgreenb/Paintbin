@@ -59,6 +59,12 @@ $(document).ready(function() {
         clearCanvas();
     });
 
+    $('#download_canvas').click(function(){
+        data = document.getElementById('canvas').toDataURL();
+
+        document.location.href = data.replace("image/png", "image/octet-stream");
+    });
+
 });
 
 //Here is the addClick function that will save the click position:
