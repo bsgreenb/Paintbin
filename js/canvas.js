@@ -81,6 +81,14 @@ $(document).ready(function() {
         clearCanvas();
     });
 
+    $('#save_canvas').click(function(){
+        //our submit method is derived from http://www.html5rocks.com/en/tutorials/canvas/integrating/
+        data = document.getElementById('canvas').toDataURL('image/png');
+        $('#png_data').val(data);
+        alert($('#png_data').val()); 
+        $('#paintForm').submit();
+    });
+    
     $('#download_canvas').click(function(){
         data = document.getElementById('canvas').toDataURL();
 
