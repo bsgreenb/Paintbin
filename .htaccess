@@ -1,0 +1,4 @@
+<FilesMatch "\.(?i:png)$">
+ ForceType application/octet-stream
+ Header set Content-Disposition attachment
+</FilesMatch>
