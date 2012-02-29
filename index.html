@@ -3,7 +3,12 @@
         <title>Paintbin -- A pastebin for drawing images</title>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <!--[if IE]><script type="text/javascript" src="/js/excanvas.js"></script><![endif]-->
+        <script type="text/javascript" src="/js/colorpicker/colorpicker.js"></script>
+        <script type="text/javascript" src="/js/colorpicker/eye.js"></script>
+        <script type="text/javascript" src="/js/colorpicker/utils.js"></script>
         <script type="text/javascript" src="/js/canvas.js"></script>
+       
+
         <style type="text/css">
             canvas 
             { 
@@ -14,6 +19,7 @@
                 margin-left: 100px;
             }
         </style>
+        <link rel="stylesheet" href="/css/colorpicker.css" type="text/css" />
     </head>
     <body>
         <h1>PaintBin</h1>
@@ -21,11 +27,14 @@
         
         <form name="paintForm" id="paintform" action="submit.php" method="POST">
         
-        <input id="clear_canvas" type="button" value="Clear" /> | <input type="button" id="download_canvas" value="Download" />
+        <span id="colorSelector"><div style="background-color: #4444"></div></span> 
+        Pen | Eraser | <input id="clear_canvas" type="button" value="Clear" /></div>
+        
         <div id="canvasDiv">
         </div>
 
-        <input type="submit" value="Save drawing" />
+
+        <input type="submit" value="Save drawing" /> or <a id="download_canvas" href="#">Download this Painting</a>
         </form>
 
     </body>
