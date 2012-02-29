@@ -14,7 +14,6 @@
 if(!isset($_FILES['newpng'])) throw new RuntimeException('the PNG was not passed as an argument');
 if(!getimagesize($_FILES['newpng']['tmp_name'])) throw new RuntimeException('The file was not a PNG');
 
-
 /*
  * get a new sequence #
  */
@@ -32,6 +31,7 @@ function insert_and_get_short_code() {
 
 $newShortCode = insert_and_get_short_code();
 
+move_uploaded_file($_FILES['newpng']['tmp_name'], "images/{$newShortCode}.png");
 header("Location: paintb.in/$newShortCode"); exit;
 
 
