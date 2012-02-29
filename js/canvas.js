@@ -6,8 +6,10 @@ canvasWidth = 750;
 canvasHeight = 500;
 
 curColor = '#000000';
-var clickColor = new Array(); //stores user's colors
+curSize = 3;
 
+clickColor = new Array(); //stores user's colors
+clickSize = new Array();
 
 
 $(document).ready(function() {
@@ -74,6 +76,16 @@ $(document).ready(function() {
         }
     });
 
+    $('#smallSize').click(function(){
+        curSize = 3;
+    });
+
+    $('#bigSize').click(function(){
+        curSize = 10;
+    });
+
+
+
     $('#clear_canvas').click(function(){
         clickX = Array();
         clickY = Array();
@@ -85,7 +97,6 @@ $(document).ready(function() {
         //our submit method is derived from http://www.html5rocks.com/en/tutorials/canvas/integrating/
         data = document.getElementById('canvas').toDataURL('image/png');
         $('#png_data').val(data);
-        alert($('#png_data').val()); 
         $('#paintForm').submit();
     });
     
@@ -94,7 +105,7 @@ $(document).ready(function() {
 
         document.location.href = data.replace("image/png", "image/octet-stream");
     });
-
+    
 });
 
 //Here is the addClick function that will save the click position:
@@ -109,6 +120,7 @@ function addClick(x, y, dragging)
     clickY.push(y);
     clickDrag.push(dragging);
     clickColor.push(curColor);
+    clickSize.push(curSize);
 }
 
 //The redraw function is where the magic happens. Each time the function is called the canvas is cleared and everything is redrawn. We could be more efficient and redraw only certain aspects that have been changed, but let's keep it simple.
@@ -120,7 +132,6 @@ function redraw()
     clearCanvas();
 
     context.lineJoin = "round";
-    context.lineWidth = 5;
                     
     for(var i=0; i < clickX.length; i++)
     {       
@@ -136,6 +147,7 @@ function redraw()
         context.lineTo(clickX[i], clickY[i]);
         context.closePath();
         context.strokeStyle = clickColor[i]; //Currently selected color
+        context.lineWidth = clickSize[i]; //Currently selected size
         context.stroke();
     }
 }
