@@ -5,6 +5,11 @@
 canvasWidth = 750;
 canvasHeight = 500;
 
+curColor = '#000000';
+var clickColor = new Array(); //stores user's colors
+
+
+
 $(document).ready(function() {
     //We dynamically add the canvas, so as to shield IE's virgin eyes 
     var canvasDiv = document.getElementById('canvasDiv');
@@ -54,7 +59,7 @@ $(document).ready(function() {
     
     //Color picker..
     $('#colorSelector').ColorPicker({
-        color: '#0000ff',
+        color: '#000000',
         onShow: function (colpkr) {
             $(colpkr).fadeIn(500);
             return false;
@@ -64,6 +69,7 @@ $(document).ready(function() {
             return false;
         },
         onChange: function (hsb, hex, rgb) {
+            curColor = '#' + hex;
             $('#colorSelector div').css('backgroundColor', '#' + hex);
         }
     });
@@ -94,18 +100,17 @@ function addClick(x, y, dragging)
     clickX.push(x);
     clickY.push(y);
     clickDrag.push(dragging);
+    clickColor.push(curColor);
 }
 
 //The redraw function is where the magic happens. Each time the function is called the canvas is cleared and everything is redrawn. We could be more efficient and redraw only certain aspects that have been changed, but let's keep it simple.
 
 //We set a few stroke properties for the color, shape, and width. Then for every time we recorded as a marker on paper we are going to draw a line.
 
-
 function redraw()
 {
     clearCanvas();
 
-    context.strokeStyle = "#df4b26";
     context.lineJoin = "round";
     context.lineWidth = 5;
                     
@@ -122,6 +127,7 @@ function redraw()
         }
         context.lineTo(clickX[i], clickY[i]);
         context.closePath();
+        context.strokeStyle = clickColor[i]; //Currently selected color
         context.stroke();
     }
 }
