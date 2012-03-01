@@ -5,6 +5,8 @@
 canvasWidth = 750;
 canvasHeight = 500;
 
+curTool = 'marker';
+
 curColor = '#000000';
 curSize = 3;
 
@@ -71,7 +73,10 @@ $(document).ready(function() {
             return false;
         },
         onChange: function (hsb, hex, rgb) {
-            curColor = '#' + hex;
+            if (curTool == 'marker')
+            {
+                curColor = '#' + hex;
+            }
             $('#colorSelector div').css('backgroundColor', '#' + hex);
         }
     });
@@ -84,6 +89,22 @@ $(document).ready(function() {
         curSize = 10;
     });
 
+    //Eraser and marker tools..
+    $('#marker').click(function(){
+        if (curTool != 'marker')
+        {
+            curTool = 'marker';
+            curColor = $('#colorSelector div').css('backgroundColor');
+        }
+    });
+    
+    $('#eraser').click(function(){
+        if (curTool != 'eraser')
+        {
+            curTool = 'eraser';
+            curColor = '#ffffff';
+        }
+    });
 
 
     $('#clear_canvas').click(function(){
