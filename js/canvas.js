@@ -111,6 +111,9 @@ $(document).ready(function() {
         clickX = Array();
         clickY = Array();
         clickDrag = Array();
+        clickColor = Array();
+        clickSize = Array();
+
         clearCanvas();
     });
 
