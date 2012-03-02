@@ -7,5 +7,5 @@ order deny,allow
 Options -Indexes 
 Options +FollowSymlinks
 RewriteEngine on
-RewriteRule ^([^/]{6}+)$ /uploads/$1.png
+RewriteRule ^([a-zA-Z0-9]{6}+)$ /uploads/$1.png
 
