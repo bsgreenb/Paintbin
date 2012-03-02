@@ -1,4 +1,11 @@
-<FilesMatch "\.(?i:png)$">
- ForceType application/octet-stream
- Header set Content-Disposition attachment
-</FilesMatch>
+order deny,allow
+
+<Files ~ "^(\.htaccess|\.htpasswd|php.ini|.ini\/db.ini)$">
+  deny from all
+</Files>
+
+Options -Indexes 
+Options +FollowSymlinks
+RewriteEngine on
+RewriteRule ^([^/]{6}+)$ /uploads/$1.png
+
