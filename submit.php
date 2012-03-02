@@ -59,13 +59,13 @@ if(isset($_POST['png_data'])) {
     if($fileByteSize) { #can not be empty
       $imageMetaData = getimagesize($tmpName);
       if(is_array($imageMetaData) && $imageMetaData['mime'] == 'image/png') {
-        
         $finalImage = imagecreatefrompng($tmpName);
         if($finalImage) {
           
           $shortCode = getNewShortCode();
-          if(imagepng($finalImage,"uploads/{$shortCode}.png"))
-            die('<a href="'."$shortCode".'">Available Here</a>'); #success!
+          rename($tmpName, "uploads/{$shortCode}.png") ?
+            die('<a href="'."$shortCode".'">Available Here</a>') :
+            die ('The file could not be moved!');
           
         } else {
           die('The Image data was not valid');
