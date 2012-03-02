@@ -1,39 +1,89 @@
-<?php
+<?php 
+
+error_reporting(E_ALL | E_STRICT);
+
+function __autoload($class_name) {
+  require_once('./classes/' . $class_name . '.php');
+}
 
 /**
- *
  *  This script expects one argument:
- *    1) $_FILES['newpng'] - a VALID rendered PNG
+ *    1) $_POST['png_data'] - a VALID rendered PNG
  *
- *  If these are not present this script will handle the exception
- *  @todo What error do we want to show?
+ *  @todo If [these are] not present this script crash with an exception
  */
 
-//@todo max upload size = ??? if we can say the max upload size we can stop some stupid DoS attacks
-//@todo test this?
-if(!isset($_FILES['newpng'])) throw new RuntimeException('the PNG was not passed as an argument');
-if(!getimagesize($_FILES['newpng']['tmp_name'])) throw new RuntimeException('The file was not a PNG');
+function base64decodeFix($encoded) {
+  $decoded = '';
+  for ($i=0; $i < ceil(strlen($encoded)/256); $i++)
+    $decoded = $decoded . base64_decode(substr($encoded,$i*256,256));
+  return $decoded;
+}
 
-/*
- * get a new sequence #
- */
+function isBase64Encoded($encodedString) {
+  $length = strlen($encodedString);
+  for ($i = 0; $i < $length; ++$i) {
+    $c = $encodedString[$i];
+    if (($c < '0' || $c > '9') && 
+        ($c < 'a' || $c > 'z') && 
+        ($c < 'A' || $c > 'Z') && 
+        ($c != '+') && ($c != '/') && ($c != '=')) return false;
+  }
+  return true;
+}
 
-$d = mysql_connect('localhost','root','task_4rce') or die(mysql_error());
 
-function insert_and_get_short_code() {
+function getNewShortCode() {
   $c = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-  for($c='';strlen($c<=6);$c.=$seqChar[rand(0,61)]) continue;
+  $insertStatement = DB::PDO()->prepare('INSERT INTO Painting(shortCode, booleanIsPublic) VALUES (?,1)');
   
-  $result = mysql_query(
-      sprintf("INSERT INTO pastebin.Painting(shortCode, booleanIsPublic) VALUES ('%s',1)", $c));
-      return mysql_errno() == 1062 ? insert_and_get_short_code() : $c;
+  debug_backtrace();
+  
+  do {
+    for($_sc='';strlen($_sc)<6;$_sc.=$c[rand(0,61)]) continue; #a potentially new random short code
+    debug_backtrace();
+    try {
+      $status = $insertStatement->execute(array($_sc));
+      if($insertStatement->rowCount() == 1) return $_sc;
+    } catch (PDOException $e) {
+      die($e);
+    }
+    unset($_sc);
+  } while (in_array($status, array(0, 1062))); #duplicate key (ShortCode)
+}
+
+if(isset($_POST['png_data'])) {  
+  #clean up the argument
+  $inputPNGBase64 = str_replace('data:image/png;base64,','', $_POST['png_data']);
+
+  if(isBase64Encoded($inputPNGBase64)) {
+    #create a temporary file first (outside of web directory)
+    $tmpName = '/tmp/'.uniqid('paintbin_'); //@todo make this an ini setting
+    $fileData = base64decodeFix($inputPNGBase64);
+    $fileByteSize = file_put_contents($tmpName, $fileData);
+
+    if($fileByteSize) { #can not be empty
+      
+      $imageMetaData = getimagesize($tmpName);
+      if(is_array($imageMetaData) && $imageMetaData['mime'] == 'image/png') {
+        
+        $shortCode = getNewShortCode();
+        rename($tmpName, "uploads/$shortCode");
+        die("<a href=\"uploads/{$shortCode}\"> Here </a>");        
+      }
+    } else {
+      die('the png data was empty, thus invalid');
+    }
+  } else {
+    die('the png data was not encoded (as base64) correctly');
+  }
+} else {
+  die('png_data was not set');
 }
 
 $newShortCode = insert_and_get_short_code();
-
 move_uploaded_file($_FILES['newpng']['tmp_name'], "images/{$newShortCode}.png");
 header("Location: paintb.in/$newShortCode"); exit;
-
 
 
 
