@@ -13,7 +13,6 @@ curSize = 3;
 clickColor = new Array(); //stores user's colors
 clickSize = new Array();
 
-
 $(document).ready(function() {
     //We dynamically add the canvas, so as to shield IE's virgin eyes 
     var canvasDiv = document.getElementById('canvasDiv');
@@ -32,11 +31,7 @@ $(document).ready(function() {
 
     //Mouse Down Event: When the user clicks on canvas we record the position in an array via the addClick function. We set the boolean paint to true (we will see why in a sec). Finally we update the canvas with the function redraw.
     $('#canvas').mousedown(function(e){
-        var mouseX = e.pageX - this.offsetLeft;
-        var mouseY = e.pageY - this.offsetTop;
-
         paint = true;
-        
         addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
         redraw();
     });
@@ -95,6 +90,8 @@ $(document).ready(function() {
         {
             curTool = 'marker';
             curColor = $('#colorSelector div').css('backgroundColor');
+            $("#marker").prop('disabled', true);
+            $("#eraser").prop('disabled', false);
         }
     });
     
@@ -103,6 +100,8 @@ $(document).ready(function() {
         {
             curTool = 'eraser';
             curColor = '#ffffff';
+            $("#marker").prop('disabled', false);
+            $("#eraser").prop('disabled', true);
         }
     });
 
