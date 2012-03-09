@@ -1,0 +1,54 @@
+.span5 h1{
+	color:#fff;
+}
+.span11 {
+	width:800px;
+}
+.span5 {
+	margin:20px;
+	background: #C6E6F7;
+	border-radius:0 20px 20px 0;
+	padding:10px;
+}
+table td {
+    border: 1px solid #DDDDDD;
+}
+table {
+	width:80%;
+	margin: 0 auto;
+	border-radius:10px;
+}
+.tableCell td  {
+	
+}
+table .hover  {
+	background:#ADDDF7;
+}
+.tableCell input  {
+	border:#69C1F0 solid 1px;
+	width:90%;
+}
+table td  {
+	min-width:60px;
+	height:30px;
+}
+#tabs {
+	background: #C6E6F7;
+}
+#ui-tabs-1 {
+	width:96%;
+	min-height:600px;
+	border-radius:10px;
+	border:solid #eee 2px;
+	margin:10px;
+	padding:5px;
+	background: url(../images/transparentBack.jpg) repeat;
+}
+#ui-tabs-2 {
+	width:96%;
+	min-height:600px;
+	border-radius:10px;
+	border:solid #C6D3F7 2px;
+	margin:10px;
+	padding:5px;
+	background: url(../images/transparentBack.jpg) repeat;

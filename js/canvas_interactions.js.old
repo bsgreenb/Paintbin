@@ -1,0 +1,212 @@
+/* canvas interaction functions */
+
+function draw() {
+	
+	$('.tipBox p').remove();
+	$('.tipBox').append('<p>Click and drag where you would like your new drawing box to be!</p>');
+	$('.tipBox p').css('color', '#b6e0fe');
+	$(".tipBox").fadeIn(500).delay(4000).fadeOut(500);
+	
+	$("#canvas").mousedown(function(e){
+	    var X1 = (e.pageX - this.offsetLeft) - 8;
+	    var Y1 = (e.pageY - this.offsetTop) - 8;
+	    var X12 = (e.pageX) - 6;
+	    var Y12 = (e.pageY) - 6;
+	    $("#canvas").append('<div id="showBox"></div>');
+	    $("#showBox").css('left', X1).css('top', Y1);
+	    
+	    $("#canvas").mousemove(function(e){
+	    	
+		  	var width = ((e.pageX - this.offsetLeft) - 8) - X1;
+		  	var height = ((e.pageY - this.offsetTop) - 8) - Y1;
+		  	   
+		    $("#showBox").height(height).width(width);
+			});
+	
+	    $(this).mouseup(function(e){
+	    	$("#showBox").remove();
+	    	$(this).unbind('mousemove');
+	        var X2 = (e.pageX) - 8;
+	        var Y2 = (e.pageY) - 8;
+	        //alert(X1 + " " + X2 + " " + Y1 + " " + Y2);
+	        $(this).unbind('mouseup');
+	        //turn--;
+	       	w = X2 - X12;
+	    	h = Y2 - Y12;
+	    	
+	    	$("#canvas").append('<div id="editor"></div>');
+
+ 	var sketchpad = Raphael.sketchpad("editor", {
+		width: w,
+		height: h,
+		editing: true
+	});
+	$('#editor').width(w).height(h);
+	$('#editor').css('left', X12).css('top', Y12);
+	$('.tipBox p').remove();
+	$('.tipBox').append('<p>Awesome! Now you can begin drawing!</p>');
+	$('.tipBox p').css('color', '#a3ed9b');
+	
+	// When the sketchpad changes, update the input field.
+	sketchpad.change(function() {
+		$("#data").val(sketchpad.json());
+	});
+		
+ 		$("#editor").dblclick(function() {
+			sketchpad.editing(true);
+			$("#editor").draggable('destroy');
+		});
+		$("#drawingTools").dblclick(function() {
+			sketchpad.editing(false);
+			$(this).css('border', 'none');
+			$("#editor").draggable();
+			
+			$('#editor').css({'top': position.top}); 
+			//$('#editor').css({'position': 'fixed'});
+			$('#editor').css({'left': position.left});
+		});
+		
+		$("#editor_move").click(function() {
+			$("#editor").draggable();
+		});
+		$("#editor_delete").click(function(){
+			$("#editor").remove();
+		});
+		$("#editor_undo").click(function() {
+			sketchpad.undo();
+			console.log("undotest");
+		});
+		$("#editor_redo").click(function() {
+			sketchpad.redo();
+		});
+		$("#editor_clear").click(function() {
+			sketchpad.clear();
+		});
+		$("#editor_animate").click(function() {
+			sketchpad.animate();
+		});
+ 		$("#drawingTools .blue").click(function() {
+			sketchpad.pen().color("#1A356E");
+		});
+		$("#drawingTools .black").click(function() {
+			sketchpad.pen().color("#000000");
+		});
+		$("#drawingTools .white").click(function() {
+			sketchpad.pen().color("#FFFFFF");
+		});
+		$("#drawingTools .grey").click(function() {
+			sketchpad.pen().color("#DDDDDD");
+		});
+		$("#drawingTools .green").click(function() {
+			sketchpad.pen().color("#21b639");
+		});
+		$("#drawingTools .lightblue").click(function() {
+			sketchpad.pen().color("#63d5f1");
+		});
+		$("#drawingTools .purple").click(function() {
+			sketchpad.pen().color("#1A356E");
+		});
+		$("#drawingTools .orange").click(function() {
+			sketchpad.pen().color("#1A356E");
+		});
+		$("#drawingTools .red").click(function() {
+			sketchpad.pen().color("#FF0000");
+		});	
+	    	
+	    });
+	    
+	    $(this).unbind('mousedown');   
+	 });
+}
+
+function text() {
+
+}
+
+function newtitle() {
+	$('.tipBox p').remove();
+	$('.tipBox').append('<p>To create a new text object, simply drag an element onto the page!</p>');
+	$('.tipBox p').css('color', '#b6e0fe');
+	$(".tipBox").fadeIn(500).delay(4000).fadeOut(500);
+	
+	var X1 = (e.pageX - this.offsetLeft) - 8;
+    var Y1 = (e.pageY - this.offsetTop) - 8;
+    var X12 = (e.pageX) - 6;
+    var Y12 = (e.pageY) - 6;
+    $("#canvas").append('<div id="titlePreview"></div>');
+    $("#titlePreview").css('left', X1).css('top', Y1);
+
+    $("#canvas").mousemove(function(e){
+	   $("#titlePreview").css('left', (e.pageX - this.offsetLeft)).css('top', (e.pageY - this.offsetTop));
+		});
+		
+    $(this).mouseup(function(e){
+	$("#titlePreview").remove();
+	$(this).unbind('mousemove');
+    var X2 = (e.pageX) - 8;
+    var Y2 = (e.pageY) - 8;
+    
+	$("#canvas").append('<div id="textbox"></div>');
+	textpad = Raphael('textbox', "100%", "80%");
+
+	$('#textbox').css('left', X2).css('top', Y2);
+	$("#textbox").draggable();
+
+	var txt =  textpad.text(175, 50, "Some Header of Mine");
+	txt.attr({
+		"width" : 150,
+		"fill": "#000",
+		"font-size": "12pt",
+		"font-weight": "bold"
+	});
+    
+    $(this).unbind('mouseup');
+    });
+			
+	/*
+$("#canvas").mousedown(function(e){
+	    var X1 = (e.pageX - this.offsetLeft) - 8;
+	    var Y1 = (e.pageY - this.offsetTop) - 8;
+	    var X12 = (e.pageX) - 6;
+	    var Y12 = (e.pageY) - 6;
+	    $("#canvas").append('<div id="showBox"></div>');
+	    $("#showBox").css('left', X1).css('top', Y1);
+	    
+	    $("#canvas").mousemove(function(e){
+	    	
+		  	var width = ((e.pageX - this.offsetLeft) - 8) - X1;
+		  	var height = ((e.pageY - this.offsetTop) - 8) - Y1;
+		  	   
+		    $("#showBox").height(height).width(width);
+			});
+	
+	    $(this).mouseup(function(e){
+	    	$("#showBox").remove();
+	    	$(this).unbind('mousemove');
+	        var X2 = (e.pageX) - 8;
+	        var Y2 = (e.pageY) - 8;
+	        //alert(X1 + " " + X2 + " " + Y1 + " " + Y2);
+	        $(this).unbind('mouseup');
+	        //turn--;
+	       	w = X2 - X12;
+	    	h = Y2 - Y12;
+	    	
+			$("#canvas").append('<div id="textbox"></div>');
+			textpad = Raphael('textbox', "100%", "80%");
+		
+			$('#textbox').width(w).height(h);
+			$('#textbox').css('left', X12).css('top', Y12);
+			$("#textbox").draggable();
+		
+			var txt =  textpad.text(175, 50, "some text");
+			txt.attr({
+				"width" : 150,
+				"fill": "#000",
+				"font-size": "12pt",
+				"font-weight": "bold"
+			});
+		});
+	  $(this).unbind('mousedown');   
+	});
+	*/
+}

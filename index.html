@@ -1,36 +1,137 @@
-<html>
-    <head>
-        <title>Paintbin -- A pastebin for drawing images</title>
-        <script type="text/javascript" src="/js/jquery171.min.js"></script>
-        <!--[if IE]><script type="text/javascript" src="/js/excanvas.js"></script><![endif]-->
-        <script type="text/javascript" src="/js/colorpicker/colorpicker.js"></script>
-        <script type="text/javascript" src="/js/colorpicker/eye.js"></script>
-        <script type="text/javascript" src="/js/colorpicker/utils.js"></script>
-        <script type="text/javascript" src="/js/canvas.js"></script>
-       
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+<title>Rage Comic Maker</title>
 
-        <style type="text/css">
-            canvas { border: 1px solid black; }
-            #paintForm { margin-left: 100px; }
-            #colorSelector {display:inline-block;}
-        </style>
-        <link rel="stylesheet" href="/css/colorpicker.css" type="text/css" />
-    </head>
-    <body>
-        <h1>PaintBin</h1>
-        <h2>A pastebin for drawing images</h2>
-        
-        <form name="paintForm" id="paintForm" action="submit.php" method="POST" enctype="multipart/form-data">
-        
-        <span id="colorSelector"><div style="background-color: #000000"></div></span> 
-        <input type="button" id="smallSize" value="Small"> <input type="button" id="bigSize" value="Big"> | <input type="button" id="marker" value="marker" disabled="disabled" /> | <input type="button" id="eraser" value="eraser" /> | <input id="clear_canvas" type="button" value="Clear" /></div>
-        
-        <div id="canvasDiv">
-        </div>
-        <input type="hidden" id="png_data" name="png_data" value="" />
+		<!-- jQuery -->
+	<script src="js/jQuery.js"></script>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
-        <input id="save_canvas" type="button" value="Save drawing" /> or <a id="download_canvas" href="#">Download this Painting</a>
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="css/fb-buttons.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="css/jquery.svg.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="css/slide.css" type="text/css" media="screen" />
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" href="css/rage.css" type="text/css">
+	<link rel="stylesheet" media="screen" type="text/css" href="js/colorpicker/css/colorpicker.css" />
+
+	<script type="text/javascript" src="js/jquery.svg.js"></script>
+	<script type="text/javascript" src="js/svg.js"></script>
+	<!-- Color Picker -->
+	<script type="text/javascript" src="js/colorpicker/js/colorpicker.js"></script>
+	<script type="text/javascript" src="js/colorpicker/js/eye.js"></script>
+    <script type="text/javascript" src="js/colorpicker/js/utils.js"></script>
+    <script type="text/javascript" src="js/colorpicker/js/layout.js"></script>
+
+	<script type="text/javascript" src="js/canvas_build.js"></script>
+	<script type="text/javascript" src="js/canvas_tools.js"></script>
+	<script type="text/javascript" src="js/canvas_interactions.js"></script>
+	<script type="text/javascript" src="js/tehmagic.js"></script>
+	<script type="text/javascript" src="js/jquery.event.drag-1.5.min.js"></script>
+	<script type="text/javascript" src="js/slide.js"></script>
+		<!-- Paintbin -->
+	<script type="text/javascript" src="js/canvas.js"></script>
+		<!-- Raphael -->
+    <script type="text/javascript" src="js/raphael-min.js"></script>
+    <script type="text/javascript" src="js/raphael.draggable.js"></script>
+    <script type="text/javascript" src="js/raphael.sketchpad.js"></script>
+		<!-- json -->
+	<script type="text/javascript" src="js/json2.min.js"></script>
+	
+	<script type="text/javascript" src="js/jquery.roundabout.js"></script>
+
+</head>
+<body>
+  <noscript>This requires JavaScript to be enabled in your browser to work properly.</noscript>
+
+   <div class="tipBox"></div>
+   
+    	<div id="topMenuButtons">
+		<form name="paintForm" id="paintForm" action="submit.php" method="POST" enctype="multipart/form-data">
+	        <input type="hidden" id="png_data" name="png_data" value="" />
+	        <input id="save_canvas" type="button" value="Save drawing" /> 
+	        <input id="download_canvas" value="Download this Painting" type="button" />
+	       <!-- <a id="download_canvas" href="#">Download this Painting</a> -->
         </form>
+			
+		</div>  
+		
+	<div class="header">
+   		<h1>Paintbin</h1>
+	</div>
+		
+  <div class="wrapper"> 
+<div class="container-fluid">
+	<div class="row">
+		<div class="span1">
+			<!--left panel-->
+				<div class="panel">
+            <div id='buttons'>
+            	
+                <ul>
+	      <!--  <input type="button" id="marker" value="marker" disabled="disabled" /> | // problem? --> 
+	        </form>
+                	
+                    <li><div class="buttons" id="pencilButton"></div></li>
+                    <li><div class="buttons" id="penButton"></div></li>
+                    	        <span id="colorSelector">
+	        	<div style="background-color: #000000"></div>
+	        </span> 
+                    <li><div class="buttons" id="eraserButton"></div></li>
+                    <li><div class="buttons" id="trashButton"></div></li>
+     
+                </ul>
+            
+        		</div>
+			</div>
+		</div> <!-- end left panel container -->
+		
+		<div class="span13">
+			<!--canvas-->			
+				
+					<div id="canvasDiv">
+        </div>	 <!-- end canvas -->
+		</div> <!-- end canvas container -->
+		
+		<div class="span4">
+			<!-- right panel-->
+			<div id="drawingTools" class="tools">
+					<h3>Drawing</h3>
+				        <ul>
+				            <li><button class="uibutton confirm" id="editor_undo" type="submit">Undo</button></li>
+				            <li><button class="uibutton confirm" id="editor_redo" type="submit">Redo</button></li>
+				            <li><button class="uibutton confirm" id="editor_clear" type="submit">Clear</button></li>
+				        </ul>
 
-    </body>
+				<h5>Color</h5>
+				<button class="uibutton special" id="colorpickersubmit" type="submit">Change</button>
+				<div id="colorSelector">
+					<div style="background-color: #0000ff"></div>
+				</div>
+				<h5>Size</h5>
+				<button class="uibutton special" id="sizepickersubmit" type="submit">Change</button>
+				<input id="slider-bubble" type="text"/>
+				<div class="demo">
+				
+				<div id="slider-bar"></div>
+
+				</div>
+				</div>
+					
+					
+		<div class="interact">
+		</div>
+					</div>
+					
+				<div id="boxTools" class="tools">
+					<h3>Grid</h3>
+					<button class="uibutton special" id="new" type="submit">New</button></div>
+			<!-- end right panel container -->
+		</div>
+	</div>
+</div>
+
+</div> <!-- end wrapper -->
+
+</body>
 </html>

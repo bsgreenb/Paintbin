@@ -2,7 +2,7 @@
 //William's code was made available under the permissive Apache License: http://www.apache.org/licenses/LICENSE-2.0.html
 //Our (modifications of his) code are NOT available under a permissive license, and are under copyright to Paintbin (C) 2012
 
-canvasWidth = 750;
+canvasWidth = 850;
 canvasHeight = 500;
 
 curTool = 'marker';
@@ -76,11 +76,11 @@ $(document).ready(function() {
         }
     });
 
-    $('#smallSize').click(function(){
+    $('#pencilButton').click(function(){
         curSize = 3;
     });
 
-    $('#bigSize').click(function(){
+    $('#penButton').click(function(){
         curSize = 10;
     });
 
@@ -95,7 +95,7 @@ $(document).ready(function() {
         }
     });
     
-    $('#eraser').click(function(){
+    $('#eraserButton').click(function(){
         if (curTool != 'eraser')
         {
             curTool = 'eraser';
@@ -106,7 +106,7 @@ $(document).ready(function() {
     });
 
 
-    $('#clear_canvas').click(function(){
+    $('#trashButton').click(function(){
         clickX = Array();
         clickY = Array();
         clickDrag = Array();
