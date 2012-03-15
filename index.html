@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-<title>Rage Comic Maker</title>
+<title>Paintbin</title>
 
 		<!-- jQuery -->
 	<script src="js/jQuery.js"></script>
@@ -37,7 +37,6 @@
     <script type="text/javascript" src="js/raphael.sketchpad.js"></script>
 		<!-- json -->
 	<script type="text/javascript" src="js/json2.min.js"></script>
-	
 	<script type="text/javascript" src="js/jquery.roundabout.js"></script>
 
 </head>
@@ -51,6 +50,7 @@
 	        <input type="hidden" id="png_data" name="png_data" value="" />
 	        <input id="save_canvas" type="button" value="Save drawing" /> 
 	        <input id="download_canvas" value="Download this Painting" type="button" />
+	        <a id="about" href="#" type="button" />About</a>
 	       <!-- <a id="download_canvas" href="#">Download this Painting</a> -->
         </form>
 			
@@ -73,10 +73,9 @@
 	        </form>
                 	
                     <li><div class="buttons" id="pencilButton"></div></li>
-                    <li><div class="buttons" id="penButton"></div></li>
-                    	        <span id="colorSelector">
-	        	<div style="background-color: #000000"></div>
-	        </span> 
+                    <span id="colorSelector"><div style="background-color: #000000"></div></span> 
+                    <li><div class="buttons" id="sizeButton"></div></li>
+                    <div id="slider-bar"></div>
                     <li><div class="buttons" id="eraserButton"></div></li>
                     <li><div class="buttons" id="trashButton"></div></li>
      

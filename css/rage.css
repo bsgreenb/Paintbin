@@ -108,12 +108,15 @@ a.active.trigger {
 /* Canvas */
 #canvas {
 	z-index:100;
-	background:url(../images/transparentBack.jpg) repeat scroll 0 0 #FFF;
+	background:#FFF;
 	border:#000 solid 2px;
 	-moz-border-radius-bottomleft:20px;
 	-webkit-border-bottom-left-radius:20px;
 	-moz-border-radius-bottomright:20px;
 	-webkit-border-bottom-right-radius:20px;
+	-moz-border-radius-topright:20px;
+	-webkit-border-top-right-radius:20px;
+	cursor:crosshair;
 }
 
 /** Main Divs **/
@@ -129,12 +132,14 @@ a.active.trigger {
 	opacity:.35;
 	padding:8px;
 	margin-bottom:4px;
-	float:left;
+	z-index: 20;
 }
 #topMenuButtons {
 	float:right;
 	margin: 10px 10px 0 0;
 	height:23px;
+    position: relative;
+    z-index: 60;
 }
 .header h1 {
 	float:left;
@@ -281,7 +286,6 @@ blockquote {
 	background: url("../js/colorpicker/images/select.png") repeat scroll center center transparent;
     height: 28px;
     width: 28px; 
-    padding-left:6px;
     border-radius:4px;
 }
 #colorSelector {
@@ -303,6 +307,11 @@ blockquote {
 #sizepickersubmit {
 	float:right;
 	width:48px;
+}
+#slider-bar {
+	position:absolute;
+	float:left;
+	display: none;
 }
 .ui-tabs .ui-tabs-panel {
 	min-height:80px;

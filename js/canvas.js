@@ -77,13 +77,15 @@ $(document).ready(function() {
     });
 
     $('#pencilButton').click(function(){
-        curSize = 3;
+    	curTool = 'marker';
+        curColor = $("#colorSelector div").css('backgroundColor'); 
+        
     });
-
+/*
     $('#penButton').click(function(){
         curSize = 10;
     });
-
+*/
     //Eraser and marker tools..
     $('#marker').click(function(){
         if (curTool != 'marker')
@@ -107,13 +109,16 @@ $(document).ready(function() {
 
 
     $('#trashButton').click(function(){
-        clickX = Array();
-        clickY = Array();
-        clickDrag = Array();
-        clickColor = Array();
-        clickSize = Array();
-
-        clearCanvas();
+    	var r=confirm("Are you sure you want to clear your canvas?");
+    	if (r==true)
+  		{
+	        clickX = Array();
+	        clickY = Array();
+	        clickDrag = Array();
+	        clickColor = Array();
+	        clickSize = Array();
+	        clearCanvas();
+  		}
     });
 
     $('#save_canvas').click(function(){
