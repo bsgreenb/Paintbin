@@ -1,11 +1,15 @@
 order deny,allow
 
-<Files ~ "^(\.htaccess|\.htpasswd|php.ini|.ini\/db.ini)$">
+<Files ~ "^\.(htaccess|htpasswd)$">
+  deny from all
+</Files>
+
+<Files ~ "^php.ini$">
   deny from all
 </Files>
 
 Options -Indexes 
 Options +FollowSymlinks
 RewriteEngine on
-RewriteRule ^([a-zA-Z0-9]{6}+)$ /uploads/$1.png
+RewriteRule ^([a-zA-Z0-9]{6}+)$ view.php?shortLink=$1.png
 
